@@ -2,6 +2,8 @@
 
 const cardsArray= ['ambulance','camera-retro','bug','child','hourglass-start', 'android','fighter-jet', 'gift','ambulance','camera-retro','bug','child','hourglass-start', 'android','fighter-jet', 'gift'];
 $deck = $('.deck');
+$card = $('.card');
+selectedCardsByClick = [];
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -22,14 +24,22 @@ function shuffle(array) {
 function generateGame() {
     let startingCards = shuffle(cardsArray);
     for (let i = 0; i < startingCards.length; i++) {
-        $deck.append($('<li class="card"><i class="fa fa-' + startingCards[i] + '"></i></li>'))
+        $deck.append($('<li class="card"><i class="fa fa-' + startingCards[i] + '"></i></li>'));
+        addFlipCard();
     }
 }
-//function startOfGame() {
-//    let cards = shuffle(icons);
-//   for (let x = 0; x < cards.length; x++) {
-//        $deck.append($('<li class="card"><x class="fa fa-' + cards[x] + '"></x></li>'))
-//    }
+
+// function for flipping the cards and adding to them new class styles, pushing them into array for comparssion function
+function addFlipCard() {
+    let $card = $('.card'), $visibleCard;
+
+    $card.bind('click', function() {
+        $visibleCard = $(this).addClass('card open show');
+        selectedCardsByClick.push($visibleCard);
+
+    })
+}
 
 generateGame();
+
 
