@@ -43,71 +43,38 @@ function generateBoard() {
 // function for flipping the cards and adding to them new class styles, pushing them into array for comparssion function
 //if (!$('.card').classList.contains('open') && !$('.card').classList.contains('show') && !$('.card').classList.contains('match')) {
 function addFlipCard() {
-
     $('.card').on("click", function () {
-        $(this).addClass("open show");
+        $(this).addClass("open show clicked");
         selectedCardsByClick.push($(this));
         console.log(selectedCardsByClick.length);
-        controlClicks();
         comparingCards();
     })
 }
-/*function addFlipCard() {
-    let $card = $('.card'), $visibleCard;
-
-    $card.bind('click', function() {
-        $visibleCard = $(this).addClass('card open show');
-        selectedCardsByClick.push($visibleCard);
-        console.log(selectedCardsByClick.length);
-        comparingCards()
-    })
-}*/
 
 //this function is comparing cards
 function comparingCards() {
     if (selectedCardsByClick.length === 2) {
         let cardOne = $(selectedCardsByClick[0]).children().attr('class');
         let cardTwo = $(selectedCardsByClick[1]).children().attr('class');
+        $(".card").off("click");
 
         if(cardOne === cardTwo) {
             selectedCardsByClick[0].addClass('match') && selectedCardsByClick[1].addClass('match');
             matchCards.push($('.match'));
             console.log('mateched cards are here ' + matchCards.length);
             selectedCardsByClick.length = 0;
+            addFlipCard();
     } else {
             //selectedCardsByClick.length = 0;
             setTimeout(function () {
-                $(selectedCardsByClick[0]).removeClass('open show') && $(selectedCardsByClick[1]).removeClass('open show');
+                $(selectedCardsByClick[0]).removeClass('open show clicked') && $(selectedCardsByClick[1]).removeClass('open show clicked');
                 selectedCardsByClick.length = 0;
+                addFlipCard();
             }, 500);
 
 
     }
 }}
-
-function controlClicks(){
-    if ($('.card').hasClass('open') || $('.card').hasClass('show') || $('.card').hasClass('match')) {
-        $('.open').off();
-
-
-    }
-}
-    /*if (selectedCardsByClick === 2) {
-        let cardOne = $(selectedCardsByClick[0]).children().attr('class'),
-            cardTwo = $(selectedCardsByClick[1]).children().attr('class');
-
-        if(cardOne === cardTwo) {
-            selectedCardsByClick[0].addClass('match') && selectedCardsByClick[1].addClass('match');
-            selectedCardsByClick = [];
-        }
-        else {
-            selectedCardsByClick[0].addClass('red') && selectedCardsByClick[1].addClass('red');
-            setTimeout(function () {
-                selectedCardsByClick[0].removeClass('open show red') && selectedCardsByClick[1].addClass('open show red');
-                selectedCardsByClick = [];
-            }, delay /1.5);
-        }}}*/
-
 
 memoryGameInit();
 
