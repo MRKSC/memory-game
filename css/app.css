@@ -39,6 +39,10 @@ h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300; }
 
+.red {
+    color: red;
+}
+
 /*
  * Styles for the deck of cards
  */
