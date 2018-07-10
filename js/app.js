@@ -12,6 +12,7 @@ function memoryGameInit() {
     $deck.empty();
     generateBoard();
     addFlipCard();
+
 }
 
 
@@ -40,11 +41,14 @@ function generateBoard() {
 }
 
 // function for flipping the cards and adding to them new class styles, pushing them into array for comparssion function
+//if (!$('.card').classList.contains('open') && !$('.card').classList.contains('show') && !$('.card').classList.contains('match')) {
 function addFlipCard() {
-    $(".card").on("click", function () {
+
+    $('.card').on("click", function () {
         $(this).addClass("open show");
         selectedCardsByClick.push($(this));
         console.log(selectedCardsByClick.length);
+        controlClicks();
         comparingCards();
     })
 }
@@ -69,10 +73,25 @@ function comparingCards() {
             selectedCardsByClick[0].addClass('match') && selectedCardsByClick[1].addClass('match');
             matchCards.push($('.match'));
             console.log('mateched cards are here ' + matchCards.length);
-    } else {
             selectedCardsByClick.length = 0;
+    } else {
+            //selectedCardsByClick.length = 0;
+            setTimeout(function () {
+                $(selectedCardsByClick[0]).removeClass('open show') && $(selectedCardsByClick[1]).removeClass('open show');
+                selectedCardsByClick.length = 0;
+            }, 500);
+
+
     }
 }}
+
+function controlClicks(){
+    if ($('.card').hasClass('open') || $('.card').hasClass('show') || $('.card').hasClass('match')) {
+        $('.open').off();
+
+
+    }
+}
     /*if (selectedCardsByClick === 2) {
         let cardOne = $(selectedCardsByClick[0]).children().attr('class'),
             cardTwo = $(selectedCardsByClick[1]).children().attr('class');
