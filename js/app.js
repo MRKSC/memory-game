@@ -12,9 +12,9 @@ $ratingStar = $('.fa-star');
 $moveCounterHtml = $('.moves');
 movesCount=[];
 starResult=[];
-const oneStarRank = 24;
+const oneStarRank = 20;
 const twoStarRank = 16;
-const threeStarRank = 8;
+const threeStarRank = 11;
 let intervalId;
 let stars = 3;
 
@@ -156,13 +156,13 @@ function resetTimer() {
 
 //rating star function
 function ratePlayerWithStars(movesCount) {
-    if (movesCount < threeStarRank ) {
-        $ratingStar.eq(2).removeClass('fa-star').addClass('fa-star-o');
-        stars = 2;
-    } else if (movesCount < twoStarRank ) {
-            $ratingStar.eq(1).removeClass('fa-star').addClass('fa-star-o');
-            stars=1
-    } else if (movesCount < oneStarRank) {
+    if (movesCount <= threeStarRank ) {
+        $ratingStar.eq(3).removeClass('fa-star').addClass('fa-star-o');
+        stars = 3;
+    } else if (movesCount > threeStarRank && movesCount < twoStarRank ) {
+            $ratingStar.eq(2).removeClass('fa-star').addClass('fa-star-o');
+            stars=2
+    } else if (movesCount > oneStarRank) {
         $ratingStar.eq(1).removeClass('fa-star').addClass('fa-star-o');
                 stars = 1;
             }
