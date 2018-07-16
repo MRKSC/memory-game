@@ -1,32 +1,38 @@
-//selectors and array of cards
+// all selectors and array of used  cards
 const cardsArray= ['ambulance','camera-retro','bug','child','hourglass-start', 'android',
     'fighter-jet', 'gift','ambulance','camera-retro','bug','child','hourglass-start',
     'android','fighter-jet', 'gift'];
-$deck = $('.deck');
-$card = $('.card');
 selectedCardsByClick = [];
 matchCards = [];
-let second = 0;
+movesCount=[];
+starResult=[];
+$deck = $('.deck');
+$card = $('.card');
 $timer = $('.timer');
 $ratingStar = $('.fa-star');
 $moveCounterHtml = $('.moves');
-movesCount=[];
-starResult=[];
 const oneStarRank = 20;
 const twoStarRank = 16;
 const threeStarRank = 11;
-let intervalId;
+let second = 0;
 let stars = 3;
+let intervalId;
 
-//inicialization of the game
+
+//**********************************CODEMRKSC**********************************//
+
+
+//initialization of the game
 function memoryGameInit() {
     $deck.empty();
     generateBoard();
     addFlipCard();
     resetTimer(intervalId);
+    movesCount= 0;
     timeStart();
-    movesCount= 0 ;
+
 }
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -43,16 +49,18 @@ function shuffle(array) {
     return array;
 }
 
+
 //Generating cards for Index HTML with class attributes and font awesome icons
 function generateBoard() {
     let startingCards = shuffle(cardsArray);
-    for (let i = 0; i < startingCards.length; i++) {
+        for (let i = 0; i < startingCards.length; i++) {
         $deck.append($('<li class="card"><i class="fa fa-' + startingCards[i] + '"></i></li>'));
 
     }
 }
 
-// function for flipping the cards and adding to them new class styles, pushing them into array for comparssion function
+
+// function for flipping the cards and adding to them new class styles, pushing them into array for comparison function
 
 function addFlipCard() {
     $('.card').on("click", function () {
@@ -65,16 +73,16 @@ function addFlipCard() {
     })
 }
 
+
 //this function is comparing cards in the game
 function comparingCards() {
     if (selectedCardsByClick.length === 2) {
         let cardOne = $(selectedCardsByClick[0]).children().attr('class');
         let cardTwo = $(selectedCardsByClick[1]).children().attr('class');
-        movesCount++;
-        ratePlayerWithStars(movesCount);
-        $moveCounterHtml.html(movesCount);
-
-        $(".card").off("click");
+            movesCount++;
+            ratePlayerWithStars(movesCount);
+            $moveCounterHtml.html(movesCount);
+            $(".card").off("click");
 
         if(cardOne === cardTwo) {
             selectedCardsByClick[0].addClass('match') && selectedCardsByClick[1].addClass('match');
@@ -82,7 +90,10 @@ function comparingCards() {
             console.log('mateched cards are here ' + matchCards.length);
             selectedCardsByClick.length = 0;
             addFlipCard();
-    } else {
+
+         }
+
+         else {
             //selectedCardsByClick.length = 0;
             setTimeout(function () {
                 $(selectedCardsByClick[0]).removeClass('open show clicked') && $(selectedCardsByClick[1]).removeClass('open show clicked');
@@ -90,9 +101,10 @@ function comparingCards() {
                 addFlipCard();
             }, 500);
 
+          }
 
-    }
 }}
+
 
 // when system reach 8 match in  matchCards array  its ends the game as win
 function finishGame() {
@@ -103,6 +115,8 @@ function finishGame() {
 
     }
 }
+
+
 //this function is shown when a player finish the game as modal
 function gameIsFinishedModal() {
     swal({
@@ -119,7 +133,9 @@ function gameIsFinishedModal() {
         }
     })
 }
-// this function is reseting the game if user confirm
+
+
+// this function is resetting the game if user confirm
 function resetGameModal() {
     $('.restart').on('click', function () {
         swal({
@@ -138,15 +154,18 @@ function resetGameModal() {
     });
 }
 
-// function wich start a time
+
+// function which start a time
 function timeStart() {
    intervalId = setInterval(function() {
         $timer.text(`${second}`);
         second++;
     }, 1000);
+
 }
 
-// this function is reseting time
+
+// this function is resetting time
 function resetTimer() {
     clearInterval(intervalId);
     $timer.text('0');
@@ -154,36 +173,29 @@ function resetTimer() {
 
 }
 
+
 //rating star function
 function ratePlayerWithStars(movesCount) {
     if (movesCount <= threeStarRank ) {
         $ratingStar.eq(3).removeClass('fa-star').addClass('fa-star-o');
         stars = 3;
-    } else if (movesCount > threeStarRank && movesCount < twoStarRank ) {
+            }
+
+    else if (movesCount > threeStarRank && movesCount < twoStarRank ) {
             $ratingStar.eq(2).removeClass('fa-star').addClass('fa-star-o');
             stars=2
-    } else if (movesCount > oneStarRank) {
-        $ratingStar.eq(1).removeClass('fa-star').addClass('fa-star-o');
-                stars = 1;
-            }
-        return {
-                stars
+             }
 
+    else if (movesCount > oneStarRank) {
+        $ratingStar.eq(1).removeClass('fa-star').addClass('fa-star-o');
+        stars = 1;
+             }
+
+    return {
+        stars
         };
     }
+
+
 memoryGameInit();
 resetGameModal();
-
-/*function finishGame() {
-    if(matchCards.length === 8) {
-        ratePlayerWithStars(movesCount);
-        let score = ratePlayerWithStars(movesCount).score;
-        setTimeout(function () {
-            gameIsFinishedModal(movesCount,score);
-        },500);
-
-    }
-}*/
-
-
-
