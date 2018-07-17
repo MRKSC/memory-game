@@ -30,7 +30,7 @@ function memoryGameInit() {
     resetTimer(intervalId);
     $moveCounterHtml.text('0');
     movesCount=0;
-    matchCards = 0;
+    matchCards = [];
     timeStart();
 
 }
@@ -80,10 +80,10 @@ function comparingCards() {
     if (selectedCardsByClick.length === 2) {
         let cardOne = $(selectedCardsByClick[0]).children().attr('class');
         let cardTwo = $(selectedCardsByClick[1]).children().attr('class');
-            movesCount++;
-            ratePlayerWithStars(movesCount);
-            $moveCounterHtml.html(movesCount);
-            $(".card").off("click");
+        movesCount++;
+        ratePlayerWithStars(movesCount);
+        $moveCounterHtml.html(movesCount);
+        $(".card").off("click");
 
         if(cardOne === cardTwo) {
             selectedCardsByClick[0].addClass('match') && selectedCardsByClick[1].addClass('match');
@@ -91,9 +91,9 @@ function comparingCards() {
             selectedCardsByClick.length = 0;
             addFlipCard();
 
-         }
+        }
 
-         else {
+        else {
             //selectedCardsByClick.length = 0;
             setTimeout(function () {
                 $(selectedCardsByClick[0]).removeClass('open show clicked') && $(selectedCardsByClick[1]).removeClass('open show clicked');
@@ -101,9 +101,9 @@ function comparingCards() {
                 addFlipCard();
             }, 500);
 
-          }
+        }
 
-}}
+    }}
 
 
 // when system reach 8 match in  matchCards array  its ends the game as win

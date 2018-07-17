@@ -170,12 +170,16 @@ font-size: 20px;
     }
 }
 
-@media only screen and (max-width: 545px){
-    .deck .card{
+@media only screen and (max-width: 545px) {
+
+    .deck .card {
         width: 40px;
         height: 40px;
         line-height: 40px;
         margin: 0 5px 5px 0 !important;
+    }
+    .deck .card.show {
+        font-size: 23px;
     }
 
     .deck {
@@ -191,6 +195,7 @@ font-size: 20px;
         margin-bottom: 10px;
         font-size: 12px;
     }
+
 
 }
 
