@@ -28,7 +28,9 @@ function memoryGameInit() {
     generateBoard();
     addFlipCard();
     resetTimer(intervalId);
-    movesCount= 0;
+    $moveCounterHtml.text('0');
+    movesCount=0;
+    matchCards = 0;
     timeStart();
 
 }
@@ -66,7 +68,6 @@ function addFlipCard() {
     $('.card').on("click", function () {
         $(this).addClass("open show clicked");
         selectedCardsByClick.push($(this));
-        console.log(selectedCardsByClick.length);
         comparingCards();
         finishGame();
 
@@ -87,7 +88,6 @@ function comparingCards() {
         if(cardOne === cardTwo) {
             selectedCardsByClick[0].addClass('match') && selectedCardsByClick[1].addClass('match');
             matchCards.push($('.match'));
-            console.log('mateched cards are here ' + matchCards.length);
             selectedCardsByClick.length = 0;
             addFlipCard();
 
@@ -119,6 +119,7 @@ function finishGame() {
 
 //this function is shown when a player finish the game as modal
 function gameIsFinishedModal() {
+    timerStop();
     swal({
         allowEscapeKey: true,
         allowOutsideClick: true,
@@ -170,6 +171,11 @@ function resetTimer() {
     clearInterval(intervalId);
     $timer.text('0');
     second = 0;
+
+}
+// This function stops timer
+function timerStop() {
+    clearInterval(intervalId);
 
 }
 
